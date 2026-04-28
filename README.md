@@ -22,6 +22,7 @@
     
 - **多结局设定**：根据关键剧情道具（如“布满刮痕的公交车卡”或“沾染泥土的书签”），解锁普通通关或隐藏的 A/B 结局。
     
+<img width="1113" height="873" alt="ScreenShot_2026-04-28_092141_544" src="https://github.com/user-attachments/assets/578e4ed4-89b7-4a5c-a817-adbca88b5c43" />
 
 ---
 
