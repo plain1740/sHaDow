@@ -64,7 +64,7 @@ def SH2(story,Save):
 
     n=system('cls')
     print('遇到事件：',story.name)
-    print()2
+    print()
     t1=story.time_start
     t2=story.time_end
     t3=story.t_c

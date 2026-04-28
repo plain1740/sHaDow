@@ -22,6 +22,11 @@ order_present=['q']
 
 gametime=0
 
+txt=open("收集数据.txt","a")
+txt.write(" 最新一次的尝试！")
+txt_record=0
+txt.close()
+
 class but: #按键用
     def fun():
         order_present.append(a)
@@ -297,9 +302,9 @@ class Save(): #大类
         elif m=='teleport':
             m1=self.Map[self.pl][0]
             x1=[m1.xx(),m1.yy()]
-            while m1.it[x1[0]][x1[1]]!='■':
+            while m1.it[x1[0]][x1[1]]!='口':
                 x1=[m1.xx(),m1.yy()]
-            m1.it[m1.di[1]][m1.di[0]]='■'
+            m1.it[m1.di[1]][m1.di[0]]='口'
             m1.it[x1[0]][x1[1]]='你'
             m1.di=x1[::-1]
             self.san_basis-=5
@@ -309,7 +314,7 @@ class Save(): #大类
             di=m1.di2[0]
             if self.san<=30:
                 self.san_basis+=DO.distance(m1.di,di)*0.5
-            m1.it[m1.di[1]][m1.di[0]]='■'
+            m1.it[m1.di[1]][m1.di[0]]='口'
             m1.it[di[0]][di[1]]='始'
             m1.di=di
             
@@ -317,7 +322,7 @@ class Save(): #大类
         elif m=='sHaDow':
             m1=self.Map[self.pl][0]
             di=m1.di2[1]
-            m1.it[m1.di[1]][m1.di[0]]='■'
+            m1.it[m1.di[1]][m1.di[0]]='口'
             m1.di=di
         elif m=='end':
             if self.pl==7:
@@ -447,9 +452,27 @@ SH.ap(plain)
 
 def main():
     global gametime
+    global txt_record
     n=os.system('cls')
     a=plain.Map[plain.pl][0]
     a.player_move(order_present[-1],plain)
+
+    if txt_record!=plain.pl:
+        txt=open("收集数据.txt","a")
+        txt.write("\n第"+str(txt_record)+"\n")
+        txt_record=plain.pl
+        txt.write("gametime:"+str(gametime)+"\n")
+        txt.write("steps:"+str(plain.walk)+"\n")
+        txt.write('sight'+str(plain.pro['sight'])+' /'+str(plain.pro['sight_max'])+"\n")
+        txt.write('san: '+str(plain.san)+'  '+"\n")
+        txt.write('状态： '+str(plain.situation)+"\n")
+        for ob in range(len(plain.bag)):
+            txt.write(str(ob)+'.')
+            m=SH.object_total[plain.bag[ob]]
+            txt.write(m.name+"\n")
+        txt.close()
+        
+    
     if type(plain.pl)!=type(1):
             return
     plain.judge()

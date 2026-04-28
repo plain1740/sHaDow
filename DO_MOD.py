@@ -63,8 +63,8 @@ def deep(Maze,start,end,map_dic):
 player_pl=0
 map_list=[]
 Maptype=[]
-itdic={-2:'',-1:'',0:'■',1:'  '}
-map_dic={'■':0,'  ':1,'你':0,'终':0,'始':0,0:0,1:1,'偷':0
+itdic={-2:'',-1:'',0:'口',1:'  '}
+map_dic={'口':0,'  ':1,'你':0,'终':0,'始':0,0:0,1:1,'偷':0
          ,'醉':0,'氓':0,'影':0,'奇':0,'の':0,'◆':0}
 mst=['偷','醉','氓','影']  #用在后面的类里了
 mst_normal=['偷','醉','氓']
@@ -72,7 +72,7 @@ mst_normal=['偷','醉','氓']
 map_example=list(map_dic.keys())
 map_hentai=['§','№','☆','○','●',
             '◎','◇','□','[]','€€',
-            '■','△','▲','※','→','←',
+            '口','△','▲','※','→','←',
             '↑','↓','〓','¤','♀','＠',
             '＆','＃']
 map_hentai2=['а','б','в','г','д','е',
@@ -141,7 +141,7 @@ class Map_total():
         huge=0 
         for x in self.it:
             for y in x:
-                if y=='■':
+                if y=='口':
                     huge+=1#判定地图空格的一个函数
         return huge
  
@@ -149,7 +149,7 @@ class Map_total():
     def update_monster(self,nu): 
         for x in range(nu):
             x1=[self.xx(),self.yy()]
-            while self.it[x1[0]][x1[1]]!='■'or distance(self.di,x1[::-1])<=5:
+            while self.it[x1[0]][x1[1]]!='口'or distance(self.di,x1[::-1])<=5:
                 x1=[self.xx(),self.yy()]
             x2=random.choice(mst_normal)
             self.it[x1[0]][x1[1]]=x2
@@ -157,19 +157,19 @@ class Map_total():
         qi=[self.di[::-1]]
         for x in range(6):
             x1=[self.xx(),self.yy()]
-            while self.it[x1[0]][x1[1]]!='■'or min([distance(x2,x1) for x2 in qi])<=5:
+            while self.it[x1[0]][x1[1]]!='口'or min([distance(x2,x1) for x2 in qi])<=5:
                 x1=[self.xx(),self.yy()]
             self.it[x1[0]][x1[1]]='奇'
             qi.append(x1)
         for x in range(5):
             x1=[self.xx(),self.yy()]
-            while self.it[x1[0]][x1[1]]!='■':
+            while self.it[x1[0]][x1[1]]!='口':
                 x1=[self.xx(),self.yy()]
             self.it[x1[0]][x1[1]]='の'
     def update_shadow(self,nu):
         for x in range(nu):
             x1=[self.xx(),self.yy()]
-            while self.it[x1[0]][x1[1]]!='■'or distance(self.di,x1[::-1])<=5:
+            while self.it[x1[0]][x1[1]]!='口'or distance(self.di,x1[::-1])<=5:
                 x1=[self.xx(),self.yy()]
             self.it[x1[0]][x1[1]]='影'
 
@@ -187,9 +187,9 @@ class Map_total():
         while True:
             start=[self.xx(),self.yy()]
             end=[self.xx(),self.yy()]
-            while self.it[start[0]][start[1]]!='■':
+            while self.it[start[0]][start[1]]!='口':
                 start=[self.xx(),self.yy()]
-            while self.it[end[0]][end[1]]!='■':
+            while self.it[end[0]][end[1]]!='口':
                 end=[self.xx(),self.yy()]
             a=distance(start,end)>=int(self.height**2+self.width**2)**0.5*0.5
             if start!=end and a:
@@ -265,9 +265,9 @@ class Map_total():
             for x in range(len(itself_init[y])):
                 if itself_init[y][x]==2:  #标注点
                     if itself[y][x]=='の':
-                        itself[y][x]='■'
+                        itself[y][x]='口'
                     if save.situation=='漠视' and itself[y][x] in mst:
-                        itself[y][x]='■'
+                        itself[y][x]='口'
                     if [x,y] in save.didi[save.pl][:-1] and ( save.situation=='忽视'):
                         itself[y][x]='◆'
 
@@ -406,7 +406,7 @@ WARING:
                 self.update_shadow(30)
             elif m=='断离':
                 save.em=[]
-        self.it[self.di[1]][self.di[0]]='■'
+        self.it[self.di[1]][self.di[0]]='口'
         self.it[di[1]][di[0]]='你'
         self.di=di
         self.mark() #用于出口和入口的标记wq
@@ -416,7 +416,7 @@ WARING:
         for x in [[0,1],[1,0],[0,-1],[-1,0]]:
             a=[di[0]+x[0],di[1]+x[1]]
             if 0<=a[0]<=self.width-1 and 0<=a[1]<=self.height-1:
-                if self.it[a[1]][a[0]]=='■'or self.it[a[1]][a[0]]=='你':
+                if self.it[a[1]][a[0]]=='口'or self.it[a[1]][a[0]]=='你':
                     li.append(a)
         if li!=[]:
             a=random.choice(li)
@@ -435,7 +435,7 @@ WARING:
             if di!=False:
                 if self.it[di[1]][di[0]]=='你':
                     mt=self.it[y][x]
-                    self.it[y][x]='■'
+                    self.it[y][x]='口'
                     if mt=='影':
                         mt=random.choice(['偷','氓','醉'])
                     mt2=AW.Object('敌人',True,personality=AW.name_dic2[mt],floor=save.pl,bag=save.bag,speed=True)
@@ -449,7 +449,7 @@ WARING:
 
                 else:
                     self.it[di[1]][di[0]]=copy.deepcopy(self.it[y][x])
-                    self.it[y][x]='■'
+                    self.it[y][x]='口'
 
     def success(self,save):
         print('''对方趔趔趄趄逃走了
